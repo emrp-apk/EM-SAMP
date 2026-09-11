@@ -1,0 +1,15 @@
+EM-SAMP PHONE-ONLY APK BUILD
+
+1. Upload this project to a GitHub repository.
+2. Open the repository on GitHub.
+3. Go to Actions.
+4. Open "Build EM-SAMP APK".
+5. If GitHub asks, enable workflows.
+6. Tap "Run workflow" (or push to main to trigger automatically).
+7. Wait for the build to finish.
+8. Open the successful workflow run.
+9. Scroll to Artifacts and download "EM-SAMP-APK".
+10. Extract the downloaded artifact to get the .apk.
+
+This workflow builds a DEBUG APK. It is suitable for testing.
+For public distribution, a signed RELEASE APK should be produced later.
