@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
-    <application
+    <application android:icon="@drawable/em_samp_logo" android:roundIcon="@drawable/em_samp_logo"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@style/Theme.EMSAMP"
