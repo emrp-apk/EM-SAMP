@@ -121,13 +121,47 @@ fun EMSAMPApp() {
                         prefs.edit().putString("character_name", name).apply()
                         scope.launch {
                             busy = true
-                            val result = ClientLauncher(context).launch(name)
+                            val result = ClientLauncher(context).launch(name, prefs.getString("selected_client", null))
                             busy = false
                             message = result.exceptionOrNull()?.message ?: "Launching S-MP client…"
                         }
                     }, enabled = !busy, modifier = Modifier.fillMaxWidth().height(64.dp), shape = RoundedCornerShape(20.dp)) {
                         Icon(Icons.Default.PlayArrow, null); Spacer(Modifier.width(8.dp))
                         Text(if (busy) "CONNECTING…" else "PLAY NOW • CONNECT TO EMRP", fontSize = 17.sp, fontWeight = FontWeight.Black)
+                    }
+                }
+                item {
+                    var showClientMenu by remember { mutableStateOf(false) }
+                    var selectedClient by remember {
+                        mutableStateOf(prefs.getString("selected_client", LauncherConfig.CLIENT_PACKAGES.first()) ?: LauncherConfig.CLIENT_PACKAGES.first())
+                    }
+
+                    Box {
+                        OutlinedButton(
+                            onClick = { showClientMenu = true },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(Icons.Default.Settings, null)
+                            Spacer(Modifier.width(8.dp))
+                            Text("CLIENT • $selectedClient")
+                        }
+
+                        DropdownMenu(
+                            expanded = showClientMenu,
+                            onDismissRequest = { showClientMenu = false }
+                        ) {
+                            LauncherConfig.CLIENT_PACKAGES.forEach { client ->
+                                DropdownMenuItem(
+                                    text = { Text(client) },
+                                    onClick = {
+                                        selectedClient = client
+                                        prefs.edit().putString("selected_client", client).apply()
+                                        showClientMenu = false
+                                        message = "Client selected: $client"
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
                 item {

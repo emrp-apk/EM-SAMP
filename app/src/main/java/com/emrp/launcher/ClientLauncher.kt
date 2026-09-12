@@ -13,8 +13,8 @@ class ClientLauncher(private val context: Context) {
         }
     }
 
-    fun launch(characterName: String): Result<Unit> {
-        val pkg = findInstalledPackage() ?: return Result.failure(IllegalStateException("No supported S-MP mobile client is installed."))
+    fun launch(characterName: String, selectedPackage: String? = null): Result<Unit> {
+        val pkg = selectedPackage?.takeIf { it.isNotBlank() } ?: findInstalledPackage() ?: return Result.failure(IllegalStateException("No supported S-MP mobile client is installed."))
         val launch = context.packageManager.getLaunchIntentForPackage(pkg) ?: return Result.failure(IllegalStateException("Client launch activity not found."))
         // These extras are intentionally adapter-friendly. Different S-MP clients expose different keys.
         launch.putExtra("server", LauncherConfig.SERVER_HOST)
